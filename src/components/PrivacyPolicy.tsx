@@ -1,12 +1,17 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, Eye, Database, Lock } from "lucide-react";
+import { ArrowLeft, Shield, Eye, Database, Lock, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 interface PrivacyPolicyProps {
   onBack: () => void;
 }
 
 const PrivacyPolicy = ({ onBack }: PrivacyPolicyProps) => {
+  useEffect(() => {
+    document.title = "Privacy Policy - Allocura";
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <header className="py-4 px-4 md:px-8 border-b">
@@ -16,6 +21,12 @@ const PrivacyPolicy = ({ onBack }: PrivacyPolicyProps) => {
             Back
           </Button>
           <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <span className="font-semibold text-foreground">Allocura</span>
+          </div>
+          <div className="flex items-center gap-2 ml-4">
             <Shield className="w-5 h-5 text-primary" />
             <h1 className="text-xl font-semibold">Privacy Policy</h1>
           </div>

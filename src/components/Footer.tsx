@@ -90,7 +90,7 @@ const Footer = ({ onSIPCalculator, onPrivacyPolicy }: FooterProps) => {
 
         <div className="border-t border-border/50 mt-8 pt-6 text-center">
           <p className="text-xs text-muted-foreground">
-            © 2024 Allocura. Made with ❤️ for Indian investors. 
+            © {new Date().getFullYear()} Allocura. Made with ❤️ for Indian investors. 
             <span className="mx-2">•</span>
             Educational tool, not investment advice.
           </p>
