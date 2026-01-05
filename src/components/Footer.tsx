@@ -1,1 +1,101 @@
-import { motion } from \"framer-motion\";\nimport { ExternalLink, Shield, BookOpen, AlertTriangle } from \"lucide-react\";\n\nconst Footer = () => {\n  return (\n    <motion.footer \n      className=\"bg-secondary/30 border-t border-border/50 py-8 px-4 md:px-8 mt-12\"\n      initial={{ opacity: 0 }}\n      animate={{ opacity: 1 }}\n      transition={{ delay: 0.5 }}\n    >\n      <div className=\"max-w-6xl mx-auto\">\n        <div className=\"grid md:grid-cols-3 gap-8\">\n          {/* About */}\n          <div>\n            <h3 className=\"font-semibold text-foreground mb-3 flex items-center gap-2\">\n              <Shield className=\"w-4 h-4\" />\n              About Allocura\n            </h3>\n            <p className=\"text-sm text-muted-foreground leading-relaxed\">\n              Educational investment portfolio planner using transparent, rule-based logic. \n              Designed for Indian investors seeking sensible long-term allocation guidance.\n            </p>\n          </div>\n\n          {/* Resources */}\n          <div>\n            <h3 className=\"font-semibold text-foreground mb-3 flex items-center gap-2\">\n              <BookOpen className=\"w-4 h-4\" />\n              Learn More\n            </h3>\n            <div className=\"space-y-2\">\n              <a href=\"https://www.sebi.gov.in/\" target=\"_blank\" rel=\"noopener noreferrer\" \n                 className=\"text-sm text-muted-foreground hover:text-primary flex items-center gap-1\">\n                SEBI Guidelines <ExternalLink className=\"w-3 h-3\" />\n              </a>\n              <a href=\"https://www.amfiindia.com/\" target=\"_blank\" rel=\"noopener noreferrer\" \n                 className=\"text-sm text-muted-foreground hover:text-primary flex items-center gap-1\">\n                AMFI Resources <ExternalLink className=\"w-3 h-3\" />\n              </a>\n              <a href=\"https://www.nseindia.com/\" target=\"_blank\" rel=\"noopener noreferrer\" \n                 className=\"text-sm text-muted-foreground hover:text-primary flex items-center gap-1\">\n                NSE Education <ExternalLink className=\"w-3 h-3\" />\n              </a>\n            </div>\n          </div>\n\n          {/* Disclaimer */}\n          <div>\n            <h3 className=\"font-semibold text-foreground mb-3 flex items-center gap-2\">\n              <AlertTriangle className=\"w-4 h-4\" />\n              Important Notice\n            </h3>\n            <p className=\"text-xs text-muted-foreground leading-relaxed\">\n              This tool is for educational purposes only. Not financial advice. \n              Consult SEBI-registered advisors before investing. \n              Market risks apply to all investments.\n            </p>\n          </div>\n        </div>\n\n        <div className=\"border-t border-border/50 mt-8 pt-6 text-center\">\n          <p className=\"text-xs text-muted-foreground\">\n            © 2024 Allocura. Made with ❤️ for Indian investors. \n            <span className=\"mx-2\">•</span>\n            Educational tool, not investment advice.\n          </p>\n        </div>\n      </div>\n    </motion.footer>\n  );\n};\n\nexport default Footer;
+import { motion } from "framer-motion";
+import { ExternalLink, Shield, BookOpen, AlertTriangle, Calculator, FileText } from "lucide-react";
+
+interface FooterProps {
+  onSIPCalculator: () => void;
+  onPrivacyPolicy: () => void;
+}
+
+const Footer = ({ onSIPCalculator, onPrivacyPolicy }: FooterProps) => {
+  return (
+    <motion.footer 
+      className="bg-secondary/30 border-t border-border/50 py-8 px-4 md:px-8 mt-12"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+    >
+      <div className="max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-4 gap-8">
+          {/* About */}
+          <div>
+            <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              About Allocura
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Educational investment portfolio planner using transparent, rule-based logic. 
+              Designed for Indian investors seeking sensible long-term allocation guidance.
+            </p>
+          </div>
+
+          {/* Tools */}
+          <div>
+            <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Calculator className="w-4 h-4" />
+              Tools
+            </h3>
+            <div className="space-y-2">
+              <button 
+                onClick={onSIPCalculator}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 w-full text-left"
+              >
+                SIP Calculator <Calculator className="w-3 h-3" />
+              </button>
+              <button 
+                onClick={onPrivacyPolicy}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 w-full text-left"
+              >
+                Privacy Policy <FileText className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              Learn More
+            </h3>
+            <div className="space-y-2">
+              <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer" 
+                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1">
+                SEBI Guidelines <ExternalLink className="w-3 h-3" />
+              </a>
+              <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer" 
+                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1">
+                AMFI Resources <ExternalLink className="w-3 h-3" />
+              </a>
+              <a href="https://www.nseindia.com/" target="_blank" rel="noopener noreferrer" 
+                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1">
+                NSE Education <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+
+          {/* Disclaimer */}
+          <div>
+            <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4" />
+              Important Notice
+            </h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              This tool is for educational purposes only. Not financial advice. 
+              Consult SEBI-registered advisors before investing. 
+              Market risks apply to all investments.
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-border/50 mt-8 pt-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            © 2024 Allocura. Made with ❤️ for Indian investors. 
+            <span className="mx-2">•</span>
+            Educational tool, not investment advice.
+          </p>
+        </div>
+      </div>
+    </motion.footer>
+  );
+};
+
+export default Footer;

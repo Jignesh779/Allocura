@@ -1,0 +1,22 @@
+{
+  "name": "Allocura - Investment Portfolio Planner",
+  "short_name": "Allocura",
+  "description": "Simple, sensible investing for India. Get personalized portfolio allocation in minutes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f6458",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity", "education"],
+  "lang": "en-IN",
+  "scope": "/",
+  "prefer_related_applications": false
+}

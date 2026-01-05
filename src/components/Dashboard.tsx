@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Download, RotateCcw, TrendingUp, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { jsPDF } from "jspdf";
@@ -8,6 +8,8 @@ import AssetCard from "./AssetCard";
 import TimelineChart from "./TimelineChart";
 import ReminderSection from "./ReminderSection";
 import Footer from "./Footer";
+import SIPCalculator from "./SIPCalculator";
+import PrivacyPolicy from "./PrivacyPolicy";
 import {
   UserProfile,
   PortfolioAllocation,
@@ -28,6 +30,8 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
   const [explanations] = useState<AllocationExplanation[]>(() =>
     generateExplanations(profile, allocation)
   );
+  const [showSIPCalculator, setShowSIPCalculator] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   const downloadPDF = () => {
     const doc = new jsPDF();
@@ -304,7 +308,19 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
         </motion.div>
       </main>
       
-      <Footer />
+      <Footer 
+        onSIPCalculator={() => setShowSIPCalculator(true)}
+        onPrivacyPolicy={() => setShowPrivacyPolicy(true)}
+      />
+      
+      <AnimatePresence>
+        {showSIPCalculator && (
+          <SIPCalculator onClose={() => setShowSIPCalculator(false)} />
+        )}
+        {showPrivacyPolicy && (
+          <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
