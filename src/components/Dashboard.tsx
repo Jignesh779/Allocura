@@ -30,62 +30,179 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
 
   const downloadPDF = () => {
     const doc = new jsPDF();
+    let yPosition = 20;
 
-    // Header
+    // Header with logo area
+    doc.setFillColor(31, 100, 88);
+    doc.rect(0, 0, 210, 30, 'F');
+    doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
-    doc.setTextColor(31, 100, 88);
-    doc.text("Allocura", 20, 25);
-
+    doc.text("Allocura", 20, 20);
     doc.setFontSize(12);
-    doc.setTextColor(100);
-    doc.text("Your Personalized Investment Portfolio", 20, 35);
+    doc.text("Your Personalized Investment Portfolio", 20, 26);
+    
+    yPosition = 45;
+    doc.setTextColor(0, 0, 0);
 
-    // Profile Summary
-    doc.setFontSize(14);
-    doc.setTextColor(30);
-    doc.text("Profile Summary", 20, 55);
-
+    // Profile Summary Section
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text("Profile Summary", 20, yPosition);
+    yPosition += 10;
+    
     doc.setFontSize(10);
-    doc.setTextColor(80);
-    const profileLines = [
+    doc.setFont(undefined, 'normal');
+    const profileData = [
       `Age Group: ${profile.ageGroup}`,
       `Employment: ${profile.employmentType}`,
       `Income Stability: ${profile.incomeStability}`,
-      `Risk Comfort: ${profile.riskComfort}`,
+      `Monthly Income: ${profile.monthlyIncome}`,
+      `Existing EMIs: ${profile.existingEMIs}`,
+      `Emergency Fund: ${profile.emergencyFund}`,
       `Investment Horizon: ${profile.investmentHorizon}`,
+      `Risk Comfort: ${profile.riskComfort}`,
+      `Tax Awareness: ${profile.taxAwareness}`,
+      `Gold Preference: ${profile.goldPreference}`
     ];
-    profileLines.forEach((line, i) => {
-      doc.text(line, 20, 65 + i * 7);
+    
+    profileData.forEach((line) => {
+      doc.text(line, 25, yPosition);
+      yPosition += 6;
     });
+    
+    yPosition += 10;
 
-    // Allocation
+    // Asset Allocation Section
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text("Recommended Asset Allocation", 20, yPosition);
+    yPosition += 15;
+
+    // Create a simple pie chart representation
+    const centerX = 105;
+    const centerY = yPosition + 30;
+    const radius = 25;
+    let currentAngle = 0;
+    
+    const colors = [
+      [31, 100, 88],   // Equity - Green
+      [33, 112, 184],  // Debt - Blue  
+      [128, 128, 128], // Liquid - Gray
+      [255, 193, 7],   // Gold - Yellow
+      [156, 39, 176]   // REITs - Purple
+    ];
+    
+    explanations.forEach((exp, index) => {
+      const angle = (exp.allocation / 100) * 360;
+      const color = colors[index] || [100, 100, 100];
+      
+      doc.setFillColor(color[0], color[1], color[2]);
+      // Simple rectangle representation instead of pie slice
+      doc.rect(20, yPosition + (index * 8), (exp.allocation / 100) * 80, 6, 'F');
+      
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(10);
+      doc.text(`${exp.asset}: ${exp.allocation}%`, 110, yPosition + (index * 8) + 4);
+    });
+    
+    yPosition += (explanations.length * 8) + 20;
+
+    // Detailed Allocation Breakdown
     doc.setFontSize(14);
-    doc.setTextColor(30);
-    doc.text("Recommended Allocation", 20, 110);
-
-    doc.setFontSize(10);
-    doc.setTextColor(80);
-    explanations.forEach((exp, i) => {
-      doc.setTextColor(30);
-      doc.text(`${exp.asset}: ${exp.allocation}%`, 20, 120 + i * 20);
-      doc.setTextColor(80);
+    doc.setFont(undefined, 'bold');
+    doc.text("Allocation Breakdown & Rationale", 20, yPosition);
+    yPosition += 10;
+    
+    explanations.forEach((exp) => {
+      // Asset name and percentage
+      doc.setFontSize(12);
+      doc.setFont(undefined, 'bold');
+      doc.text(`${exp.asset}: ${exp.allocation}%`, 20, yPosition);
+      yPosition += 8;
+      
+      // Reasoning
+      doc.setFontSize(9);
+      doc.setFont(undefined, 'normal');
       const reasonLines = doc.splitTextToSize(exp.reason, 170);
-      doc.text(reasonLines, 20, 127 + i * 20);
+      reasonLines.forEach((line) => {
+        doc.text(line, 25, yPosition);
+        yPosition += 5;
+      });
+      
+      yPosition += 5;
+      
+      // Check if we need a new page
+      if (yPosition > 250) {
+        doc.addPage();
+        yPosition = 20;
+      }
     });
 
-    // Disclaimer
-    const disclaimerY = 130 + explanations.length * 20;
+    // Investment Guidelines
+    if (yPosition > 200) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text("Investment Guidelines", 20, yPosition);
+    yPosition += 10;
+    
+    doc.setFontSize(9);
+    doc.setFont(undefined, 'normal');
+    const guidelines = [
+      "• Start with building an emergency fund before aggressive investing",
+      "• Invest regularly through SIP to benefit from rupee cost averaging",
+      "• Review and rebalance your portfolio annually",
+      "• Don't panic during market volatility - stay invested for long term",
+      "• Consider tax-saving instruments like ELSS for Section 80C benefits",
+      "• Diversify across asset classes to reduce overall portfolio risk"
+    ];
+    
+    guidelines.forEach((guideline) => {
+      doc.text(guideline, 20, yPosition);
+      yPosition += 6;
+    });
+    
+    yPosition += 10;
+
+    // Important Disclaimers
+    doc.setFillColor(255, 248, 220);
+    doc.rect(15, yPosition - 5, 180, 35, 'F');
+    doc.setDrawColor(255, 193, 7);
+    doc.rect(15, yPosition - 5, 180, 35, 'S');
+    
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(184, 134, 11);
+    doc.text("⚠️ Important Disclaimers", 20, yPosition);
+    yPosition += 8;
+    
     doc.setFontSize(8);
-    doc.setTextColor(120);
-    doc.text(
-      "Disclaimer: This is for educational purposes only. Consult a SEBI-registered advisor before investing.",
-      20,
-      disclaimerY
-    );
+    doc.setFont(undefined, 'normal');
+    doc.setTextColor(0, 0, 0);
+    const disclaimers = [
+      "• This is for educational purposes only and does not constitute financial advice",
+      "• Past performance does not guarantee future returns",
+      "• All investments are subject to market risks",
+      "• Please consult a SEBI-registered investment advisor before investing",
+      "• The allocation is based on general principles and may not suit your specific needs"
+    ];
+    
+    disclaimers.forEach((disclaimer) => {
+      doc.text(disclaimer, 20, yPosition);
+      yPosition += 4;
+    });
+    
+    // Footer
+    yPosition = 280;
+    doc.setFontSize(8);
+    doc.setTextColor(128, 128, 128);
+    doc.text(`Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`, 20, yPosition);
+    doc.text("Allocura - Simple, Sensible Investing for India", 20, yPosition + 5);
 
-    doc.text(`Generated on ${new Date().toLocaleDateString()}`, 20, disclaimerY + 8);
-
-    doc.save("Allocura-Portfolio.pdf");
+    doc.save("Allocura-Complete-Portfolio-Report.pdf");
   };
 
   return (
