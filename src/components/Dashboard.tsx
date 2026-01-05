@@ -9,7 +9,6 @@ import TimelineChart from "./TimelineChart";
 import ReminderSection from "./ReminderSection";
 import Footer from "./Footer";
 import SIPCalculator from "./SIPCalculator";
-import PrivacyPolicy from "./PrivacyPolicy";
 import {
   UserProfile,
   PortfolioAllocation,
@@ -31,7 +30,6 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
     generateExplanations(profile, allocation)
   );
   const [showSIPCalculator, setShowSIPCalculator] = useState(false);
-  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   const downloadPDF = () => {
     const doc = new jsPDF();
@@ -315,15 +313,12 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
       
       <Footer 
         onSIPCalculator={() => setShowSIPCalculator(true)}
-        onPrivacyPolicy={() => setShowPrivacyPolicy(true)}
+        onPrivacyPolicy={() => {}}
       />
       
       <AnimatePresence>
         {showSIPCalculator && (
           <SIPCalculator onClose={() => setShowSIPCalculator(false)} />
-        )}
-        {showPrivacyPolicy && (
-          <PrivacyPolicy onBack={() => setShowPrivacyPolicy(false)} />
         )}
       </AnimatePresence>
     </div>

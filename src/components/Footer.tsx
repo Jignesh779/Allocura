@@ -41,12 +41,14 @@ const Footer = ({ onSIPCalculator, onPrivacyPolicy }: FooterProps) => {
               >
                 SIP Calculator <Calculator className="w-3 h-3" />
               </button>
-              <button 
-                onClick={onPrivacyPolicy}
-                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 w-full text-left"
+              <a 
+                href="https://allocura.vercel.app/privacy" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
               >
-                Privacy Policy <FileText className="w-3 h-3" />
-              </button>
+                Privacy Policy <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
 
