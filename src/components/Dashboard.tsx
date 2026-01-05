@@ -7,6 +7,7 @@ import PortfolioChart from "./PortfolioChart";
 import AssetCard from "./AssetCard";
 import TimelineChart from "./TimelineChart";
 import ReminderSection from "./ReminderSection";
+import Footer from "./Footer";
 import {
   UserProfile,
   PortfolioAllocation,
@@ -200,7 +201,8 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
     doc.setFontSize(8);
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`, 20, yPosition);
-    doc.text("Allocura - Simple, Sensible Investing for India", 20, yPosition + 5);
+    doc.text("Allocura - Simple, Sensible Investing for India | https://allocura.vercel.app", 20, yPosition + 5);
+    doc.text("For educational purposes only. Consult SEBI-registered advisors before investing.", 20, yPosition + 10);
 
     doc.save("Allocura-Complete-Portfolio-Report.pdf");
   };
@@ -301,6 +303,8 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
           </div>
         </motion.div>
       </main>
+      
+      <Footer />
     </div>
   );
 };
