@@ -181,7 +181,7 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
     doc.setFontSize(12);
     doc.setFont(undefined, 'bold');
     doc.setTextColor(184, 134, 11);
-    doc.text("⚠️ Important Disclaimers", 20, yPosition);
+    doc.text("Important Disclaimers", 20, yPosition);
     yPosition += 8;
     
     doc.setFontSize(8);
