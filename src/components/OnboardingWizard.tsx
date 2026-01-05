@@ -41,10 +41,17 @@ const steps = [
     options: incomeStabilityOptions,
   },
   {
-    key: "monthlyIncome",
-    question: "What's your monthly income range?",
-    subtitle: "Helps personalize realistic allocations",
-    options: monthlyIncomeOptions,
+    key: "monthlyInvestment",
+    question: "What amount is comfortable for you to invest each month?",
+    subtitle: "Choose what feels affordable - you can always adjust this later",
+    options: [
+      { value: "1000", label: "₹1,000", description: "Good starting point" },
+      { value: "2500", label: "₹2,500", description: "Popular choice" },
+      { value: "5000", label: "₹5,000", description: "Solid commitment" },
+      { value: "10000", label: "₹10,000", description: "Serious investor" },
+      { value: "15000", label: "₹15,000", description: "High commitment" },
+      { value: "custom", label: "Custom Amount", description: "Enter your own amount" }
+    ],
   },
   {
     key: "existingEMIs",

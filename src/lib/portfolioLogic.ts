@@ -2,7 +2,7 @@ export interface UserProfile {
   ageGroup: string;
   employmentType: string;
   incomeStability: string;
-  monthlyIncome: string;
+  monthlyInvestment: string;
   existingEMIs: string;
   emergencyFund: string;
   investmentHorizon: string;

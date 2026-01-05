@@ -245,10 +245,10 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-            Your Personalized Portfolio
+            Your ₹{profile.monthlyInvestment ? parseInt(profile.monthlyInvestment).toLocaleString('en-IN') : '5,000'}/month Portfolio
           </h1>
           <p className="text-muted-foreground">
-            Based on your profile, here's a balanced allocation strategy
+            Here's how to invest your monthly amount across different assets
           </p>
         </motion.div>
 
@@ -273,7 +273,12 @@ const Dashboard = ({ profile, onReset }: DashboardProps) => {
               Allocation Breakdown
             </h2>
             {explanations.map((exp, index) => (
-              <AssetCard key={exp.asset} explanation={exp} index={index} />
+              <AssetCard 
+                key={exp.asset} 
+                explanation={exp} 
+                index={index} 
+                monthlyAmount={profile.monthlyInvestment ? parseInt(profile.monthlyInvestment) : 5000}
+              />
             ))}
           </div>
 
