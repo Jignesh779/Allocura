@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { IndianRupee } from "lucide-react";
 
 interface Option {
   value: string;
@@ -26,6 +28,17 @@ const OnboardingStep = ({
   stepNumber,
   totalSteps,
 }: OnboardingStepProps) => {
+  const [customAmount, setCustomAmount] = useState("");
+  const isCustomSelected = selectedValue === "custom" || (selectedValue && !options.find(opt => opt.value === selectedValue));
+  const isMonthlyInvestmentStep = question.includes("comfortable for you to invest");
+
+  const handleCustomAmountChange = (value: string) => {
+    setCustomAmount(value);
+    if (value && parseInt(value) >= 500) {
+      onSelect(value);
+    }
+  };
+
   return (
     <motion.div
       className="w-full max-w-2xl mx-auto px-4"
@@ -72,11 +85,17 @@ const OnboardingStep = ({
             className={cn(
               "w-full p-4 rounded-xl text-left transition-all duration-200",
               "border-2 hover:border-primary/50",
-              selectedValue === option.value
+              selectedValue === option.value || (option.value === "custom" && isCustomSelected)
                 ? "border-primary bg-primary/5 shadow-soft"
                 : "border-border bg-card hover:bg-secondary/50"
             )}
-            onClick={() => onSelect(option.value)}
+            onClick={() => {
+              if (option.value === "custom") {
+                onSelect("custom");
+              } else {
+                onSelect(option.value);
+              }
+            }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
@@ -86,12 +105,12 @@ const OnboardingStep = ({
               <div
                 className={cn(
                   "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors",
-                  selectedValue === option.value
+                  selectedValue === option.value || (option.value === "custom" && isCustomSelected)
                     ? "border-primary bg-primary"
                     : "border-muted-foreground"
                 )}
               >
-                {selectedValue === option.value && (
+                {(selectedValue === option.value || (option.value === "custom" && isCustomSelected)) && (
                   <motion.div
                     className="w-2 h-2 rounded-full bg-primary-foreground"
                     initial={{ scale: 0 }}
@@ -112,6 +131,34 @@ const OnboardingStep = ({
             </div>
           </motion.button>
         ))}
+        
+        {/* Custom Amount Input */}
+        {isMonthlyInvestmentStep && isCustomSelected && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            className="mt-4 p-4 border-2 border-primary bg-primary/5 rounded-xl"
+          >
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Enter your monthly investment amount
+            </label>
+            <div className="flex items-center gap-2">
+              <IndianRupee className="w-5 h-5 text-muted-foreground" />
+              <input
+                type="number"
+                value={customAmount}
+                onChange={(e) => handleCustomAmountChange(e.target.value)}
+                placeholder="5000"
+                min="500"
+                step="500"
+                className="flex-1 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Minimum ₹500. Choose an amount you can invest consistently.
+            </p>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );

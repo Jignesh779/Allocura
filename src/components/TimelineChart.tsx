@@ -19,7 +19,8 @@ const TimelineChart = ({ equityPercentage }: TimelineChartProps) => {
   const volatility = 0.02 + (equityPercentage / 100) * 0.03;
 
   const data = Array.from({ length: 16 }, (_, i) => {
-    const year = 2024 + i;
+    const currentYear = new Date().getFullYear();
+    const year = currentYear + i;
     const trend = Math.pow(baseGrowth, i) * 100;
     const noise = Math.sin(i * 1.5) * volatility * 100;
     return {
